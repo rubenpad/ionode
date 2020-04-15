@@ -1,0 +1,28 @@
+{
+  "name": "ionode-db",
+  "version": "1.0.0",
+  "description": "A mini IoT node platform",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubbenpad/ionode.git"
+  },
+  "author": "@rubbenpad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rubbenpad/ionode/issues"
+  },
+  "homepage": "https://github.com/rubbenpad/ionode#readme",
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "standard": "^14.3.3"
+  },
+  "dependencies": {
+    "pg": "^8.0.2",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.6"
+  }
+}
