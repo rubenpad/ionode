@@ -4,7 +4,7 @@
   "description": "A mini IoT node platform",
   "main": "index.js",
   "scripts": {
-    "lint": "standard"
+    "setup": "DEBUG=app:* node src/setup.js"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,10 @@
     "standard": "^14.3.3"
   },
   "dependencies": {
+    "chalk": "^4.0.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "inquirer": "^7.1.0",
     "pg": "^8.0.2",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.6"
