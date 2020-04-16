@@ -2,9 +2,9 @@
 
 const Sequelize = require('sequelize')
 
-function setupDatabase (config) {
-  let sequelize
+let sequelize
 
+function database(config) {
   if (!sequelize) {
     sequelize = new Sequelize(config)
   }
@@ -12,4 +12,4 @@ function setupDatabase (config) {
   return sequelize
 }
 
-module.exports = setupDatabase
+module.exports = database

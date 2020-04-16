@@ -1,20 +1,37 @@
 'use strict'
 
-const setupDatabase = require('./lib/db')
+const defaults = require('defaults')
+
+const database = require('./lib/database')
 const setupAgentModel = require('./models/agent')
 const setupMetricModel = require('./models/metric')
 
-async function databaseModule(config) {
-  const sequelize = setupDatabase(config)
+async function setupDatabase(config) {
+  // Define default values for tests purposes
+  // to avoid try to connect PostgreSQL database
+  // instead we use sqlite
+  config = defaults(config, {
+    dialect: 'sqlite',
+    pool: {
+      max: 10,
+      min: 0,
+      idle: 10000
+    },
+    query: {
+      raw: true
+    }
+  })
+
+  const sequelize = database(config)
   const AgentModel = setupAgentModel(config)
   const MetricModel = setupMetricModel(config)
 
-  // Define relations between entities in database
-  AgentModel.hasMany(MetricModel)
-  MetricModel.belongsTo(AgentModel)
-
   // Test connection to database
   await sequelize.authenticate()
+
+  // Define relations between entities
+  AgentModel.hasMany(MetricModel)
+  MetricModel.belongsTo(AgentModel)
 
   if (config.setup) {
     await sequelize.sync({ force: true })
@@ -29,4 +46,4 @@ async function databaseModule(config) {
   }
 }
 
-module.exports = databaseModule
+module.exports = setupDatabase

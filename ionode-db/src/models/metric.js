@@ -1,12 +1,12 @@
 'use strict'
 
 const Sequelize = require('sequelize')
-const setupDatabase = require('../lib/db')
+const database = require('../lib/database')
 
-function setupMetricModel (config) {
-  const sequelize = setupDatabase(config)
+function setupMetricModel(config) {
+  const sequelize = database(config)
 
-  return sequelize.define('agent', {
+  const Metric = sequelize.define('metric', {
     type: {
       type: Sequelize.STRING,
       allowNull: false
@@ -16,6 +16,8 @@ function setupMetricModel (config) {
       allowNull: false
     }
   })
+
+  return Metric
 }
 
 module.exports = setupMetricModel
