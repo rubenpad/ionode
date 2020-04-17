@@ -1,19 +1,42 @@
 'use strict'
 
-const proxyquire = require('proxyquire')
-const sinon = require('sinon')
+const setupDatabase = require('../')
+const AgentModel = require('../models/agent')
+const MetricModel = require('../models/metric')
 
-describe('Agent tests', () => {
-  let db = null
-  const config = { logging: jest.fn() }
+const mockAgent = { hasMany: jest.fn() }
+jest.mock('../models/agent', () => {
+  return jest.fn(() => mockAgent)
+})
 
-  beforeEach(async () => {
-    const setupDatabase = require('..')
+const mockMetric = { belongsTo: jest.fn() }
+jest.mock('../models/metric', () => {
+  return jest.fn(() => mockMetric)
+})
 
-    db = await setupDatabase(config)
-  })
+let db = null
+const config = { logging: false }
 
-  test('Should exists the Agent service', async () => {
-    expect(db.Agent).toBeTruthy()
-  })
+beforeEach(async () => {
+  db = await setupDatabase(config)
+})
+
+test('Should exists the Agent service', () => {
+  expect(db.Agent).toBeTruthy()
+})
+
+test('mockAgent.hasMany should be called', () => {
+  expect(mockAgent.hasMany).toHaveBeenCalled()
+})
+
+test('mockAgent.hasMany should be called with mockMetric', () => {
+  expect(mockAgent.hasMany).toHaveBeenCalledWith(mockMetric)
+})
+
+test('mockMetric.belongsTo should be called', () => {
+  expect(mockMetric.belongsTo).toHaveBeenCalled()
+})
+
+test('mockMetric.belongsTo should be called with mockAgent', () => {
+  expect(mockMetric.belongsTo).toHaveBeenCalledWith(mockAgent)
 })
