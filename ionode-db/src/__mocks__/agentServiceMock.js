@@ -59,11 +59,11 @@ const agents = [
 ]
 
 module.exports = {
-  getOne: agents[0],
-  getAll: agents,
-  getConnected: agents.filter((agent) => agent.connected),
-  getByUsername: (username) =>
+  findOne: agents[0],
+  findAll: agents,
+  findConnected: agents.filter((agent) => agent.connected),
+  findByUsername: (username) =>
     agents.filter((agent) => agent.username === username),
-  getByUuid: (uuid) => agents.find((agent) => agent.uuid === uuid),
-  getById: (id) => agents.find((agent) => agent.id === id)
+  findByUuid: (uuid) => agents.find((agent) => agent.uuid === uuid),
+  findById: (id) => agents.find((agent) => agent.id === id)
 }

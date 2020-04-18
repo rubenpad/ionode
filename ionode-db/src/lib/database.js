@@ -4,7 +4,7 @@ const Sequelize = require('sequelize')
 
 let sequelize
 
-function database(config) {
+function databaseService(config) {
   if (!sequelize) {
     sequelize = new Sequelize(config)
   }
@@ -12,4 +12,4 @@ function database(config) {
   return sequelize
 }
 
-module.exports = database
+module.exports = databaseService

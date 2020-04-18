@@ -1,10 +1,10 @@
 'use strict'
 
 const Sequelize = require('sequelize')
-const database = require('../lib/database')
+const databaseService = require('../lib/database')
 
-function setupMetricModel(config) {
-  const sequelize = database(config)
+function metricModel(config) {
+  const sequelize = databaseService(config)
 
   const Metric = sequelize.define('metric', {
     type: {
@@ -20,4 +20,4 @@ function setupMetricModel(config) {
   return Metric
 }
 
-module.exports = setupMetricModel
+module.exports = metricModel

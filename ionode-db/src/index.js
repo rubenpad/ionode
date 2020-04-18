@@ -2,9 +2,10 @@
 
 const defaults = require('defaults')
 
-const database = require('./lib/database')
-const setupAgentModel = require('./models/agent')
-const setupMetricModel = require('./models/metric')
+const databaseService = require('./lib/database')
+const agentService = require('./lib/agent')
+const agentModel = require('./models/agent')
+const metricModel = require('./models/metric')
 
 async function setupDatabase(config) {
   // Define default values for tests purposes
@@ -22,9 +23,9 @@ async function setupDatabase(config) {
     }
   })
 
-  const sequelize = database(config)
-  const AgentModel = setupAgentModel(config)
-  const MetricModel = setupMetricModel(config)
+  const sequelize = databaseService(config)
+  const AgentModel = agentModel(config)
+  const MetricModel = metricModel(config)
 
   // Test connection to database
   await sequelize.authenticate()
@@ -37,7 +38,7 @@ async function setupDatabase(config) {
     await sequelize.sync({ force: true })
   }
 
-  const Agent = {}
+  const Agent = agentService(AgentModel)
   const Metric = {}
 
   return {
