@@ -4,6 +4,7 @@ const defaults = require('defaults')
 
 const databaseService = require('./lib/database')
 const agentService = require('./lib/agent')
+const metricService = require('./lib/metric')
 const agentModel = require('./models/agent')
 const metricModel = require('./models/metric')
 
@@ -26,7 +27,7 @@ async function setupDatabase(config) {
   const sequelize = databaseService(config)
   const AgentModel = agentModel(config)
   const MetricModel = metricModel(config)
-  
+
   // Test connection to database
   await sequelize.authenticate()
 
@@ -39,7 +40,7 @@ async function setupDatabase(config) {
   }
 
   const Agent = agentService(AgentModel)
-  const Metric = {}
+  const Metric = metricService(MetricModel, AgentModel)
 
   return {
     Agent,

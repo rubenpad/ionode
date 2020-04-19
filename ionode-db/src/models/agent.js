@@ -3,6 +3,8 @@
 const Sequelize = require('sequelize')
 const databaseService = require('../lib/database')
 
+// Agent model to define the properties that
+// has the agent entity in the database
 function agentModel(config) {
   const sequelize = databaseService(config)
   const Agent = sequelize.define('agent', {

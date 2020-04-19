@@ -1,5 +1,7 @@
 'use strict'
 
+// Fake data to be used in test cases
+
 const agents = [
   {
     id: 1,

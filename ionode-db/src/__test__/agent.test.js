@@ -10,8 +10,9 @@ const mockMetric = require('../__mocks__/models/metric')
 jest.mock('../models/metric', () => jest.fn(() => mockMetric))
 
 const setupDatabase = require('../')
-const agentServiceMock = require('../utils/mocks/agentServiceMock')
+const agentServiceMock = require('../__mocks__/lib/agentServiceMock')
 
+// Data to be used in test cases
 const id = agentServiceMock.findOne.id
 const uuid = agentServiceMock.findOne.uuid
 const username = agentServiceMock.findOne.username
@@ -25,6 +26,7 @@ const groupedAgentsByUsername = agentServiceMock.findByUsername
 const allConnectedAgents = agentServiceMock.findConnected
 const newAgent = agentServiceMock.newAgent
 
+// Test suite
 describe('Agent tests', () => {
   let db = null
   const config = { logging: false }
@@ -50,14 +52,6 @@ describe('Agent tests', () => {
 
   test('AgentModel.hasMany should be called with MetricModel', () => {
     expect(mockAgent.hasMany).toHaveBeenCalledWith(mockMetric)
-  })
-
-  test('MetricModel.belongsTo should be called', () => {
-    expect(mockMetric.belongsTo).toHaveBeenCalled()
-  })
-
-  test('MetricModel.belongsTo should be called with AgentModel', () => {
-    expect(mockMetric.belongsTo).toHaveBeenCalledWith(mockAgent)
   })
 
   test('Agent.findById should be called to return an agent entity', async () => {

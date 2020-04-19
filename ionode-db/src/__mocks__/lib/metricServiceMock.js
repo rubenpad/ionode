@@ -1,5 +1,9 @@
 'use strict'
 
+// Fake data to be used in test cases
+
+const agentServiceMock = require('../lib/agentServiceMock')
+
 const metrics = [
   {
     id: 1,
@@ -45,7 +49,17 @@ const metrics = [
 
 module.exports = {
   findOne: metrics[0],
-  findByAgentUuid: metrics.filter((metric) => metric.id === 2),
-  findByTypeAgentUuid: (type) =>
-    metrics.filter((metric) => metric.type === type)
+  findByAgentUuid: (agentUuid) => {
+    return metrics.filter(
+      (metric) => metric.agentId === agentServiceMock.findByUuid(agentUuid)
+    )
+  },
+  findByTypeAgentUuid: (type, agentUuid) => {
+    return metrics.filter((metric) => {
+      return (
+        metric.type === type &&
+        metric.agentId === agentServiceMock.findByUuid(agentUuid)
+      )
+    })
+  }
 }

@@ -5,7 +5,7 @@
 // temporary is to test deepEquality between two objects with an
 // util function `deepEqual`
 const { deepEqual } = require('../../utils/deepEqual')
-const agentServiceMock = require('../../utils/mocks/agentServiceMock')
+const agentServiceMock = require('../../__mocks__/lib/agentServiceMock')
 
 const id = agentServiceMock.findOne.id
 const uuid = agentServiceMock.findOne.uuid
