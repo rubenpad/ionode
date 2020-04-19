@@ -1,15 +1,17 @@
 'use strict'
 
+// Tell to jest when agent and metric are required in `index.js`
+// use the mock from them. jest.mock() takes a moduleFactory
+// argument as a second argument that returns the mock and with it
+// we can specify what mock to use.
+const mockAgent = require('../__mocks__/models/agent')
+jest.mock('../models/agent', () => jest.fn(() => mockAgent))
+const mockMetric = require('../__mocks__/models/metric')
+jest.mock('../models/metric', () => jest.fn(() => mockMetric))
+
 const setupDatabase = require('../')
-const agentServiceMock = require('../__mocks__/agentServiceMock')
+const agentServiceMock = require('../utils/mocks/agentServiceMock')
 
-// Jest (so far) doesn't provide a way to customize the response
-// of a mock according the args with it is called so the solution
-// temporary is to test deepEquality between two objects with an
-// util function `deepEqual`
-const { deepEqual } = require('../utils/deepEqual')
-
-/*******************************************************************/
 const id = agentServiceMock.findOne.id
 const uuid = agentServiceMock.findOne.uuid
 const username = agentServiceMock.findOne.username
@@ -21,67 +23,7 @@ const oneAgent = agentServiceMock.findOne
 const allAgents = agentServiceMock.findAll
 const groupedAgentsByUsername = agentServiceMock.findByUsername
 const allConnectedAgents = agentServiceMock.findConnected
-const newAgent = {
-  id: 1,
-  uuid: '4bf322ab-d9f7-4166-a99b-f324203fb7de',
-  name: 'neo',
-  username: 'matrix',
-  hostname: 'ionode',
-  pid: 6,
-  connected: true,
-  createdAt: '2020-02-13',
-  updatedAt: '2020-04-20'
-}
-
-// jest.mock allow us to make mocks from modules we wanna test.
-// So in this case I mock the Agent and Metric models to test
-// the initialization of them in the database and the services
-// that will be expose from them to make database queries.
-
-// Here all the functions mock for Agent service
-const mockAgent = {
-  hasMany: jest.fn(),
-  findAll: jest.fn((condition) => {
-    if (deepEqual(condition, connectedCondition)) {
-      return agentServiceMock.findConnected
-    }
-
-    if (deepEqual(condition, usernameCondition)) {
-      return agentServiceMock.findByUsername
-    }
-
-    return agentServiceMock.findAll
-  }),
-  findByPk: jest.fn(() => agentServiceMock.findById(id)),
-  findOne: jest.fn((condition) => {
-    if (deepEqual(condition, uuidCondition)) {
-      return agentServiceMock.findOne
-    }
-
-    return false
-  }),
-  update: jest.fn(() => agentServiceMock.findOne),
-  create: jest.fn(() => ({
-    // When create an user the function return created.toJSON
-    // so this is the mock implementation for that functionality
-    toJSON() {
-      return newAgent
-    }
-  })),
-  findByUuid: jest.fn(() => agentServiceMock.findByUuid(uuid)),
-  findConnected: jest.fn()
-}
-jest.mock('../models/agent', () => {
-  return jest.fn(() => mockAgent)
-})
-
-// Here all mock Metric functions used in the agent tests
-const mockMetric = { belongsTo: jest.fn() }
-jest.mock('../models/metric', () => {
-  return jest.fn(() => mockMetric)
-})
-
-/*******************************************************************/
+const newAgent = agentServiceMock.newAgent
 
 describe('Agent tests', () => {
   let db = null

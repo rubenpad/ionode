@@ -26,7 +26,7 @@ async function setupDatabase(config) {
   const sequelize = databaseService(config)
   const AgentModel = agentModel(config)
   const MetricModel = metricModel(config)
-
+  
   // Test connection to database
   await sequelize.authenticate()
 

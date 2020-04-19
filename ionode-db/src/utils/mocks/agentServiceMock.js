@@ -58,7 +58,20 @@ const agents = [
   }
 ]
 
+const newAgent = {
+  id: 1,
+  uuid: '4bf322ab-d9f7-4166-a99b-f324203fb7de',
+  name: 'neo',
+  username: 'matrix',
+  hostname: 'ionode',
+  pid: 6,
+  connected: true,
+  createdAt: '2020-02-13',
+  updatedAt: '2020-04-20'
+}
+
 module.exports = {
+  newAgent,
   findOne: agents[0],
   findAll: agents,
   findConnected: agents.filter((agent) => agent.connected),
