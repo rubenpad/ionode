@@ -14,6 +14,6 @@ Initially unit tests were implemented using Ava as test runner and sinon to make
 
 Other change implemented is Mosca by Aedes because mosca is right now an unmaintained project.
 
-_Please see modules folder to information detailed about each_
+_Please see modules folder to information detailed about each one_
 
 So here we go!
