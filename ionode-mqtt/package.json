@@ -22,11 +22,7 @@
     "aedes-persistence-redis": "7.0.0",
     "chalk": "4.0.0",
     "debug": "4.1.1",
-    "ionode-db": "file:../ionode-db",
-    "mqemitter-child-process": "1.0.0",
-    "redis": "3.0.2"
+    "ionode-db": "file:../ionode-db"
   },
-  "devDependencies": {
-    "mqtt": "3.0.0"
-  }
+  "devDependencies": {}
 }

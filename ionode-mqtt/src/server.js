@@ -2,29 +2,32 @@
 
 const debug = require('debug')('ionode:mqtt')
 const chalk = require('chalk')
+const net = require('net')
 const redisPersistence = require('aedes-persistence-redis')
-const aedes = require('aedes')()
-const server = require('net').createServer(aedes.handle)
+const aedes = require('aedes')({
+  persistence: redisPersistence({
+    port: 6379,
+    host: '127.0.0.1',
+    family: 4,
+    maxSessionDelivery: 100
+  })
+})
 
-server.listen(1383, () => {
-  try {
-    console.log(chalk.cyan('[ionode-mqtt] server is running...'))
-  } catch (error) {
-    console.log(chalk.red(`[Error] ${error.message}`))
-    console.log(error.stack)
-    process.exit(1)
-  }
+const server = net.createServer(aedes.handle)
+
+server.listen(1883, () => {
+  console.log('Server listening')
 })
 
 aedes.on('client', (client) => {
-  debug(`Client connected ${client ? client.id : client}`)
+  debug(`[client-connected]: ${client.id}`)
 })
 
 aedes.on('clientDisconnect', (client) => {
-  debug(`Client disconnected ${client ? client.id : client}`)
+  debug(`[client-disconnected]: ${client.id}`)
 })
 
 aedes.on('publish', (packet, client) => {
-  debug(`Received: ${packet.topic}`)
-  debug(`Payload: ${packet.payload}`)
+  debug(`[received]: ${packet.topic}`)
+  debug(`[received]: ${packet.payload}`)
 })
