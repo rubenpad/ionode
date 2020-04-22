@@ -1,6 +1,9 @@
 'use strict'
 
 const EvenEmitter = require('events')
+const os = require('os')
+const util = require('util')
+const debug = require('debug')
 const mqtt = require('mqtt')
 const uuid = require('uuid')
 const { parsePayload } = require('ionode-tools')
@@ -15,11 +18,21 @@ class IonodeAgent extends EvenEmitter {
       interval: 5000,
       mqtt: { host: 'mqtt://localhost' }
     }
+
     this._options = options || this._defaultOptions
     this._started = false
     this._timer = null
     this._client = null
     this._agentId = null
+    this._metrics = new Map()
+  }
+
+  addMetric(type, func) {
+    this._metrics.set(type, func)
+  }
+
+  deleteMetric(type) {
+    this._metrics.delete(type)
   }
 
   connect() {
@@ -41,8 +54,38 @@ class IonodeAgent extends EvenEmitter {
         this.emit('connected', this._agentId)
 
         // Emit the message each interval time defined
-        this._timer = setInterval(() => {
-          this.emit('agent/message', 'this is a message')
+        this._timer = setInterval(async () => {
+          // If there are one or more metrics we build the message to send
+          if (this._metrics.size > 0) {
+            const message = {
+              agent: {
+                uuid: this._agentId,
+                username: this._options.username,
+                name: this._options.name,
+                hostname: os.hostname() || this._options.hostname,
+                pid: process.pid
+              },
+              metrics: [],
+              timestamp: new Date().getTime()
+            }
+
+            // If the handleEvent function provided has a callback
+            // the callback is converted into a promise with `util.promisify`
+            this._metrics.forEach((metric, func) => {
+              if (func.length === 1) {
+                func = util.promisify(func)
+              }
+              
+              // The promise then is resolve to send the message
+              message.metrics.push({type: metric, value: await Promise.resolve(func())})
+            })
+
+            debug(`[agent-sending]: ${message}`)
+
+            // Use the client instance to publish the message
+            this._client.publish('agent/message', JSON.stringify(message))
+            this.emit('message', message)
+          }
         }, this._options.interval)
       })
 
@@ -69,10 +112,12 @@ class IonodeAgent extends EvenEmitter {
   }
 
   disconnect() {
+    // Handle the disconnection event
     if (this._started) {
       clearInterval(this._timer)
       this._started = false
-      this.emit('disconnected')
+      this.emit('disconnected', this._agentId)
+      this._client.end()
     }
   }
 }
