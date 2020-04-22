@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/rubbenpad/ionode/issues"
   },
-  "homepage": "https://github.com/rubbenpad/ionode#readme"
+  "homepage": "https://github.com/rubbenpad/ionode#readme",
+  "dependencies": {
+    "debug": "4.1.1",
+    "defaults": "1.0.3",
+    "mqtt": "3.0.0",
+    "uuid": "7.0.3"
+  }
 }
