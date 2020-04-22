@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "IoT Platform - ionode-mqtt",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "DEBUG=ionode:* nodemon src/server.js"
   },
