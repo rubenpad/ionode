@@ -1,8 +1,7 @@
 {
-  "name": "ionode-agent",
+  "name": "ionode-tools",
   "version": "1.0.0",
-  "private": true,
-  "description": "IoT Node Platform - IoNode",
+  "description": "IoT Platform - Tools for IoNode project",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,10 +17,7 @@
   },
   "homepage": "https://github.com/rubbenpad/ionode#readme",
   "dependencies": {
-    "debug": "4.1.1",
-    "defaults": "1.0.3",
-    "ionode-tools": "file:../ionode-tools",
-    "mqtt": "3.0.0",
-    "uuid": "7.0.3"
+    "chalk": "4.0.0",
+    "dotenv": "8.2.0"
   }
 }

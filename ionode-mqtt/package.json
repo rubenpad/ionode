@@ -23,7 +23,8 @@
     "chalk": "4.0.0",
     "debug": "4.1.1",
     "dotenv": "8.2.0",
-    "ionode-db": "file:../ionode-db"
+    "ionode-db": "file:../ionode-db",
+    "ionode-tools": "file:../ionode-tools"
   },
   "devDependencies": {}
 }

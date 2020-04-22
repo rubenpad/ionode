@@ -5,9 +5,12 @@ const debug = require('debug')('ionode:mqtt')
 const chalk = require('chalk')
 
 const database = require('ionode-db')
-const { handleFatalError, handleError } = require('./utils/handleErrors')
-const { parsePayload } = require('./utils/parsePayload')
-const { config } = require('./config')
+const {
+  parsePayload,
+  handleFatalError,
+  handleError,
+  config
+} = require('ionode-tools')
 
 // Aedes is a barebone MQTT server that can run on any stream servers
 // See https://github.com/moscajs/aedes

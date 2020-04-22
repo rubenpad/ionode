@@ -4,7 +4,7 @@
 // of a mock according the args with it is called so the solution
 // temporary is to test deepEquality between two objects with an
 // util function `deepEqual`
-const { deepEqual } = require('../../utils/deepEqual')
+const { deepEqual } = require('ionode-tools')
 const agentServiceMock = require('../../__mocks__/lib/agentServiceMock')
 
 const id = agentServiceMock.findOne.id

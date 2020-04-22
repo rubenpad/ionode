@@ -1,9 +1,9 @@
 'use strict'
 
 const EvenEmitter = require('events')
-const debug = require('debug')
 const mqtt = require('mqtt')
 const uuid = require('uuid')
+const { parsePayload } = require('ionode-tools')
 
 class IonodeAgent extends EvenEmitter {
   constructor(options) {
@@ -53,7 +53,7 @@ class IonodeAgent extends EvenEmitter {
           topic === 'agent/disconnected' ||
           topic === 'agent/message'
         ) {
-          const parsedPayload = parsedPayload(payload)
+          const parsedPayload = parsePayload(payload)
           const { agent } = parsedPayload
           const shouldBroadcast =
             parsedPayload && agent && agent.uuid !== this._agentId

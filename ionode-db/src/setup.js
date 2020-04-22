@@ -5,15 +5,7 @@ const inquirer = require('inquirer')
 const chalk = require('chalk')
 
 const setupDatabase = require('./')
-const {
-  dbDialect,
-  dbHost,
-  dbPort,
-  dbName,
-  dbUser,
-  dbPassword
-} = require('./config')
-const handleFatalError = require('./utils/handleFatalError')
+const { config, handleFatalError } = require('ionode-tools')
 
 async function setup() {
   const prompt = inquirer.createPromptModule()
@@ -30,13 +22,13 @@ async function setup() {
     return
   }
 
-  const config = {
-    host: dbHost,
-    port: dbPort,
-    database: dbName,
-    username: dbUser,
-    password: dbPassword,
-    dialect: dbDialect,
+  const databaseConfig = {
+    host: config.dbHost,
+    port: config.dbPort,
+    database: config.dbName,
+    username: config.dbUser,
+    password: config.dbPassword,
+    dialect: config.dbDialect,
     logging: (msg) => debug(msg),
     setup: true
   }
@@ -44,7 +36,7 @@ async function setup() {
   // Try to initialize the database if something get wrong
   // the error will be handle with handleFatalError function
   try {
-    await setupDatabase(config)
+    await setupDatabase(databaseConfig)
 
     console.log(chalk.green('Success!'))
     process.exit(0)

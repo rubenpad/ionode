@@ -8,9 +8,4 @@ function handleFatalError(error) {
   process.exit(1)
 }
 
-function handleError(error) {
-  console.error(`${chalk.red('[error]:')} ${error.message}`)
-  console.error(error.stack)
-}
-
-module.exports = { handleFatalError, handleError }
+module.exports = handleFatalError

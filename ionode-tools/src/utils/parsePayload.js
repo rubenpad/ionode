@@ -16,4 +16,4 @@ function parsePayload(payload) {
   return parsedPayload
 }
 
-module.exports = { parsePayload }
+module.exports = parsePayload
