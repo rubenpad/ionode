@@ -1,0 +1,27 @@
+{
+  "name": "ionode-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoT Platform - API module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "DEBUG=ionode:* nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rubbenpad/ionode.git"
+  },
+  "author": "@rubbenpad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rubbenpad/ionode/issues"
+  },
+  "homepage": "https://github.com/rubbenpad/ionode#readme",
+  "dependencies": {
+    "chalk": "4.0.0",
+    "debug": "4.1.1",
+    "express": "4.17.1",
+    "ionode-tools": "file:../ionode-tools"
+  }
+}
