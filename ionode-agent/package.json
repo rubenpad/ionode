@@ -1,0 +1,20 @@
+{
+  "name": "ionode-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoT Node Platform - IoNode",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubbenpad/ionode.git"
+  },
+  "author": "@rubbenpad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rubbenpad/ionode/issues"
+  },
+  "homepage": "https://github.com/rubbenpad/ionode#readme"
+}
