@@ -4,6 +4,7 @@ const EvenEmitter = require('events')
 const os = require('os')
 const util = require('util')
 const debug = require('debug')
+const defaults = require('defaults')
 const mqtt = require('mqtt')
 const uuid = require('uuid')
 const { parsePayload } = require('ionode-tools')
@@ -19,7 +20,7 @@ class IonodeAgent extends EvenEmitter {
       mqtt: { host: 'mqtt://localhost' }
     }
 
-    this._options = options || this._defaultOptions
+    this._options = defaults(options, this._defaultOptions)
     this._started = false
     this._timer = null
     this._client = null
@@ -71,14 +72,17 @@ class IonodeAgent extends EvenEmitter {
 
             // If the handleEvent function provided has a callback
             // the callback is converted into a promise with `util.promisify`
-            this._metrics.forEach((metric, func) => {
+            for (let [metric, func] of this._metrics) {
               if (func.length === 1) {
                 func = util.promisify(func)
               }
-              
+
               // The promise then is resolve to send the message
-              message.metrics.push({type: metric, value: await Promise.resolve(func())})
-            })
+              message.metrics.push({
+                type: metric,
+                value: await Promise.resolve(func())
+              })
+            }
 
             debug(`[agent-sending]: ${message}`)
 
