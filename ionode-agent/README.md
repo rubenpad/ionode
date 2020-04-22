@@ -1,4 +1,4 @@
-## platziverse-agent
+## ionode-agent
 Usage
 
 ```js
