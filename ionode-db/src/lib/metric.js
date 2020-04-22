@@ -9,10 +9,10 @@ function metricService(MetricModel, AgentModel) {
    * @param {object} metric Has the data to create the metric
    */
   async function create(agentUuid, metric) {
-    const agent = AgentModel.findOne({ where: { uuid: agentUuid } })
+    const agent = await AgentModel.findOne({ where: { uuid: agentUuid } })
 
     if (agent) {
-      const result = MetricModel.create({ ...metric, agentId: agent.id })
+      const result = await MetricModel.create({ ...metric, agentId: agent.id })
       return result.toJSON()
     }
   }

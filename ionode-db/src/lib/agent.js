@@ -8,11 +8,11 @@ function agentService(AgentModel) {
    */
   async function createOrUpdate(agent) {
     const condition = { where: { uuid: agent.uuid } }
-    const agentExists = AgentModel.findOne(condition)
+    const agentExists = await AgentModel.findOne(condition)
 
     if (agentExists) {
       const updated = await AgentModel.update(agent, condition)
-      return updated || agentExists
+      return updated ? await AgentModel.findOne(condition) : agentExists
     }
 
     const created = await AgentModel.create(agent)

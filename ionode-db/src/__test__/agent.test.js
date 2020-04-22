@@ -61,7 +61,7 @@ describe('Agent tests', () => {
 
   test('Agent.createOrUpdate should be called to updated an agent', async () => {
     const agent = await db.Agent.createOrUpdate(oneAgent)
-    expect(mockAgent.findOne).toHaveBeenCalledTimes(1)
+    expect(mockAgent.findOne).toHaveBeenCalledTimes(2)
     expect(mockAgent.findOne).toHaveBeenCalledWith(uuidCondition)
     expect(mockAgent.update).toHaveBeenCalledTimes(1)
     expect(mockAgent.update).toHaveBeenCalledWith(oneAgent, uuidCondition)
