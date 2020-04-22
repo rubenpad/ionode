@@ -22,6 +22,7 @@
     "aedes-persistence-redis": "7.0.0",
     "chalk": "4.0.0",
     "debug": "4.1.1",
+    "dotenv": "8.2.0",
     "ionode-db": "file:../ionode-db"
   },
   "devDependencies": {}
