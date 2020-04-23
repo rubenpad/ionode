@@ -19,33 +19,36 @@ const mockAgentService = {
   hasMany: jest.fn(),
   findAll: jest.fn((condition) => {
     if (deepEqual(condition, connectedCondition)) {
-      return mockAgent.findConnected
+      return Promise.resolve(mockAgent.findConnected)
     }
 
     if (deepEqual(condition, usernameCondition)) {
-      return mockAgent.findByUsername
+      return Promise.resolve(mockAgent.findByUsername)
     }
 
     return mockAgent.findAll
   }),
-  findByPk: jest.fn(() => mockAgent.findById(id)),
+  findByPk: jest.fn(() => Promise.resolve(mockAgent.findById(id))),
   findOne: jest.fn((condition) => {
     if (deepEqual(condition, uuidCondition)) {
-      return mockAgent.findOne
+      return Promise.resolve(mockAgent.findOne)
     }
 
-    return false
+    // false if no one was found
+    return Promise.resolve(false)
   }),
-  update: jest.fn(() => mockAgent.findOne),
-  create: jest.fn(() => ({
-    // When create an user the function return created.toJSON
-    // so this is the mock implementation for that functionality
-    toJSON() {
-      return newAgent
-    }
-  })),
-  findByUuid: jest.fn(() => mockAgent.findByUuid(uuid)),
-  findConnected: jest.fn()
+  update: jest.fn(() => Promise.resolve(mockAgent.findOne)),
+  create: jest.fn(() =>
+    Promise.resolve({
+      // When create an user the function return created.toJSON
+      // so this is the mock implementation for that functionality
+      toJSON() {
+        return newAgent
+      }
+    })
+  ),
+  findByUuid: jest.fn(() => Promise.resolve(mockAgent.findByUuid(uuid))),
+  findConnected: jest.fn(() => Promise.resolve(mockAgent.findConnected))
 }
 
 module.exports = mockAgentService
