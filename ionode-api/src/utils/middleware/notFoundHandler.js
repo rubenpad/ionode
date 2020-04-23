@@ -2,10 +2,11 @@
 
 const boom = require('@hapi/boom')
 
+// If access to a route that doesn't exist throw the 404 error
 function notFoundHandler(request, response) {
   const {
     output: { statusCode, payload }
-  } = boom.notFound
+  } = boom.notFound()
 
   response.status(statusCode).json(payload)
 }

@@ -23,6 +23,7 @@
     "chalk": "4.0.0",
     "debug": "4.1.1",
     "express": "4.17.1",
+    "ionode-db": "file:../ionode-db",
     "ionode-tools": "file:../ionode-tools"
   }
 }

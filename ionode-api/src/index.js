@@ -4,8 +4,7 @@ const express = require('express')
 const chalk = require('chalk')
 const { config } = require('ionode-tools')
 
-const agentsApi = require('./routes/agents')
-const metricsApi = require('./routes/metrics')
+const servicesApi = require('./routes')
 
 // Error middleware
 const {
@@ -22,8 +21,8 @@ const app = express()
 app.use(express.json())
 
 // routes
-agentsApi(app)
-metricsApi(app)
+servicesApi(app)
+
 
 // catch a 404 error
 app.use(notFoundHandler)

@@ -23,12 +23,7 @@ async function setup() {
   }
 
   const databaseConfig = {
-    host: config.dbHost,
-    port: config.dbPort,
-    database: config.dbName,
-    username: config.dbUser,
-    password: config.dbPassword,
-    dialect: config.dbDialect,
+    ...config.db,
     logging: (msg) => debug(msg),
     setup: true
   }
