@@ -4,23 +4,22 @@
 // use the mock from them. jest.mock() takes a moduleFactory
 // argument as a second argument that returns the mock and with it
 // we can specify what mock to use.
-const mockAgent = require('../__mocks__/models/agent')
-jest.mock('../models/agent', () => jest.fn(() => mockAgent))
-const mockMetric = require('../__mocks__/models/metric')
-jest.mock('../models/metric', () => jest.fn(() => mockMetric))
+const { mocks } = require('ionode-tools')
+jest.mock('../models/agent', () => jest.fn(() => mocks.mockAgentService))
+jest.mock('../models/metric', () =>
+  jest.fn(() => mocks.mockMetricService)
+)
 
 const setupDatabase = require('../')
-const metricServiceMock = require('../__mocks__/lib/metricServiceMock')
-const agentServiceMock = require('../__mocks__/lib/agentServiceMock')
 
 // Data to use in the tests
-const oneAgent = agentServiceMock.findOne
+const oneAgent = mocks.mockAgent.findOne
 const agentUuid = oneAgent.uuid
 
-const oneMetric = metricServiceMock.findOne
+const oneMetric = mocks.mockMetric.findOne
 const metricType = oneMetric.type
-const metricsByAgentUuid = metricServiceMock.findByAgentUuid(agentUuid)
-const metricsByTypeAgentUuid = metricServiceMock.findByTypeAgentUuid(
+const metricsByAgentUuid = mocks.mockMetric.findByAgentUuid(agentUuid)
+const metricsByTypeAgentUuid = mocks.mockMetric.findByTypeAgentUuid(
   metricType,
   agentUuid
 )
@@ -45,11 +44,13 @@ describe('Metric tests', () => {
   })
 
   test('MetricModel.belongsTo should be called', () => {
-    expect(mockMetric.belongsTo).toHaveBeenCalled()
+    expect(mocks.mockMetricService.belongsTo).toHaveBeenCalled()
   })
 
   test('MetricModel.belongsTo should be called with AgentModel', () => {
-    expect(mockMetric.belongsTo).toHaveBeenCalledWith(mockAgent)
+    expect(mocks.mockMetricService.belongsTo).toHaveBeenCalledWith(
+      mocks.mockAgentService
+    )
   })
 
   test('Metric.create should create a new metric', async () => {
@@ -59,7 +60,7 @@ describe('Metric tests', () => {
 
   test('Metric.findByAgentUuid should returns metrics from the same agent', async () => {
     const metricsGroupedByAgentUuid = await db.Metric.findByAgentUuid(agentUuid)
-    expect(mockMetric.findAll).toHaveBeenCalledTimes(1)
+    expect(mocks.mockMetricService.findAll).toHaveBeenCalledTimes(1)
     expect(metricsGroupedByAgentUuid).toStrictEqual(metricsByAgentUuid)
   })
 
@@ -68,7 +69,7 @@ describe('Metric tests', () => {
       metricType,
       agentUuid
     )
-    expect(mockMetric.findAll).toHaveBeenCalledTimes(1)
+    expect(mocks.mockMetricService.findAll).toHaveBeenCalledTimes(1)
     expect(metricsGroupedByTypeAgentUuid).toStrictEqual(metricsByTypeAgentUuid)
   })
 })

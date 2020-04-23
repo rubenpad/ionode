@@ -2,7 +2,7 @@
 
 // Fake data to be used in test cases
 
-const agentServiceMock = require('../lib/agentServiceMock')
+const mockAgent = require('./mockAgent')
 
 const metrics = [
   {
@@ -51,14 +51,14 @@ module.exports = {
   findOne: metrics[0],
   findByAgentUuid: (agentUuid) => {
     return metrics.filter(
-      (metric) => metric.agentId === agentServiceMock.findByUuid(agentUuid)
+      (metric) => metric.agentId === mockAgent.findByUuid(agentUuid)
     )
   },
   findByTypeAgentUuid: (type, agentUuid) => {
     return metrics.filter((metric) => {
       return (
         metric.type === type &&
-        metric.agentId === agentServiceMock.findByUuid(agentUuid)
+        metric.agentId === mockAgent.findByUuid(agentUuid)
       )
     })
   }

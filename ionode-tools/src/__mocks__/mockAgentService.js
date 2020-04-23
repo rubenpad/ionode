@@ -4,39 +4,39 @@
 // of a mock according the args with it is called so the solution
 // temporary is to test deepEquality between two objects with an
 // util function `deepEqual`
-const { deepEqual } = require('ionode-tools')
-const agentServiceMock = require('../../__mocks__/lib/agentServiceMock')
+const deepEqual = require('../utils/deepEqual')
+const mockAgent = require('./mockAgent')
 
-const id = agentServiceMock.findOne.id
-const uuid = agentServiceMock.findOne.uuid
-const username = agentServiceMock.findOne.username
+const id = mockAgent.findOne.id
+const uuid = mockAgent.findOne.uuid
+const username = mockAgent.findOne.username
 const uuidCondition = { where: { uuid } }
 const usernameCondition = { where: { username } }
 const connectedCondition = { where: { connected: true } }
-const newAgent = agentServiceMock.newAgent
+const newAgent = mockAgent.newAgent
 
-const mockAgent = {
+const mockAgentService = {
   hasMany: jest.fn(),
   findAll: jest.fn((condition) => {
     if (deepEqual(condition, connectedCondition)) {
-      return agentServiceMock.findConnected
+      return mockAgent.findConnected
     }
 
     if (deepEqual(condition, usernameCondition)) {
-      return agentServiceMock.findByUsername
+      return mockAgent.findByUsername
     }
 
-    return agentServiceMock.findAll
+    return mockAgent.findAll
   }),
-  findByPk: jest.fn(() => agentServiceMock.findById(id)),
+  findByPk: jest.fn(() => mockAgent.findById(id)),
   findOne: jest.fn((condition) => {
     if (deepEqual(condition, uuidCondition)) {
-      return agentServiceMock.findOne
+      return mockAgent.findOne
     }
 
     return false
   }),
-  update: jest.fn(() => agentServiceMock.findOne),
+  update: jest.fn(() => mockAgent.findOne),
   create: jest.fn(() => ({
     // When create an user the function return created.toJSON
     // so this is the mock implementation for that functionality
@@ -44,11 +44,8 @@ const mockAgent = {
       return newAgent
     }
   })),
-  findByUuid: jest.fn(() => agentServiceMock.findByUuid(uuid)),
+  findByUuid: jest.fn(() => mockAgent.findByUuid(uuid)),
   findConnected: jest.fn()
 }
-jest.mock('../models/agent', () => {
-  return jest.fn(() => mockAgent)
-})
 
-module.exports = mockAgent
+module.exports = mockAgentService

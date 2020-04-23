@@ -1,15 +1,15 @@
 'use strict'
 
-const metricServiceMock = require('../lib/metricServiceMock')
-const agentServiceMock = require('../lib/agentServiceMock')
+const mockMetric = require('./mockMetric')
+const mockAgent = require('./mockAgent')
 
 // data to be used with jest mock functions
-const agentUuid = agentServiceMock.findOne.uuid
-const oneMetric = metricServiceMock.findOne
+const agentUuid = mockAgent.findOne.uuid
+const oneMetric = mockMetric.findOne
 const metricType = oneMetric.type
 
 // Metric service mock functions for testing
-const mockMetric = {
+const mockMetricService = {
   belongsTo: jest.fn(),
   create: jest.fn(() => ({
     // When create an user the function return created.toJSON
@@ -24,13 +24,13 @@ const mockMetric = {
   // argument
   findAll: jest.fn((condition) => {
     if (condition.group) {
-      return metricServiceMock.findByAgentUuid(agentUuid)
+      return mockMetric.findByAgentUuid(agentUuid)
     }
 
     if (condition.where.type) {
-      return metricServiceMock.findByTypeAgentUuid(metricType, agentUuid)
+      return mockMetric.findByTypeAgentUuid(metricType, agentUuid)
     }
   })
 }
 
-module.exports = mockMetric
+module.exports = mockMetricService
