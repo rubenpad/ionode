@@ -28,6 +28,7 @@
     "ionode-tools": "file:../ionode-tools"
   },
   "devDependencies": {
+    "husky": "^4.2.5",
     "jest": "25.4.0",
     "supertest": "4.0.2"
   }
