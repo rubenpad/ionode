@@ -6,9 +6,7 @@ const chalk = require('chalk')
 
 const database = require('ionode-db')
 const {
-  parsePayload,
-  handleFatalError,
-  handleError,
+  utils: { parsePayload, handleFatalError, handleError },
   config
 } = require('ionode-tools')
 

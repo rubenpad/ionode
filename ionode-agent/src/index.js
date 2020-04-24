@@ -7,7 +7,9 @@ const debug = require('debug')
 const defaults = require('defaults')
 const mqtt = require('mqtt')
 const uuid = require('uuid')
-const { parsePayload } = require('ionode-tools')
+const {
+  utils: { parsePayload }
+} = require('ionode-tools')
 
 class IonodeAgent extends EvenEmitter {
   constructor(options) {
