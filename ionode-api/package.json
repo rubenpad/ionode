@@ -6,7 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "DEBUG=ionode:* nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,9 @@
     "express": "4.17.1",
     "ionode-db": "file:../ionode-db",
     "ionode-tools": "file:../ionode-tools"
+  },
+  "devDependencies": {
+    "jest": "25.4.0",
+    "supertest": "4.0.2"
   }
 }

@@ -18,6 +18,17 @@ async function servicesApi(app) {
     Metric = services.Metric
   }
 
+  router.get('/agents', async (request, response, next) => {
+    try {
+      const connectedAgents = await Agent.findConnected()
+      response
+        .status(200)
+        .json({ data: connectedAgents, message: 'Connected agents' })
+    } catch (error) {
+      next(error)
+    }
+  })
+
   router.get('/agents/:uuid', async (request, response, next) => {
     const { uuid } = request.params
 
