@@ -3,7 +3,7 @@
 const EvenEmitter = require('events')
 const os = require('os')
 const util = require('util')
-const debug = require('debug')
+const debug = require('debug')('ionode:agent')
 const defaults = require('defaults')
 const mqtt = require('mqtt')
 const uuid = require('uuid')
@@ -108,7 +108,7 @@ class IonodeAgent extends EvenEmitter {
             parsedPayload && agent && agent.uuid !== this._agentId
 
           if (shouldBroadcast) {
-            this.emit(topic, payload)
+            this.emit(topic, parsedPayload)
           }
         }
       })

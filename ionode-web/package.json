@@ -1,0 +1,29 @@
+{
+  "name": "ionode-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IoT Platform - IoNode Web Dashboard",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "DEBUG=ionode:* nodemon src/server/index",
+    "start": "NODE_ENV=production node src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubbenpad/ionode.git"
+  },
+  "author": "@rubbenpad",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rubbenpad/ionode/issues"
+  },
+  "homepage": "https://github.com/rubbenpad/ionode#readme",
+  "dependencies": {
+    "chalk": "4.0.0",
+    "debug": "4.1.1",
+    "express": "4.17.1",
+    "ionode-agent": "file:../ionode-agent",
+    "ionode-tools": "file:../ionode-tools",
+    "socket.io": "2.3.0"
+  }
+}

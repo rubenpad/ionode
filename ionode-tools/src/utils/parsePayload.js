@@ -4,7 +4,7 @@ function parsePayload(payload) {
   let parsedPayload
 
   if (payload instanceof Buffer) {
-    parsedPayload = payload.toString('utf-8')
+    parsedPayload = payload.toString()
   }
 
   try {

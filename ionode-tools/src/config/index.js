@@ -4,7 +4,8 @@ require('dotenv').config()
 
 const config = {
   dev: process.env.NODE_ENV !== 'production',
-  port: process.env.PORT || 3000,
+  apiPort: process.env.API_PORT || 3000,
+  clientPort: process.env.CLIENT_PORT || 8080,
   auth: {
     secret: process.env.SECRET
   },

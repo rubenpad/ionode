@@ -32,10 +32,10 @@ app.use(logErrors)
 app.use(wrapErrors)
 app.use(errorHandler)
 
-app.listen(config.port, (error) => {
+app.listen(config.apiPort, () => {
   console.log(
     `${chalk.green('[ionode-api]:')} server listening at http://localhost:${
-      config.port
+      config.apiPort
     }`
   )
 })
