@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const cors = require('cors')
 const chalk = require('chalk')
 const { config } = require('ionode-tools')
 
@@ -17,12 +18,15 @@ const notFoundHandler = require('./utils/middleware/notFoundHandler')
 // Initialize the app
 const app = express()
 
+// CORS
+app.use(cors())
+app.options('*', cors())
+
 // body parser
 app.use(express.json())
 
 // routes
 servicesApi(app)
-
 
 // catch a 404 error
 app.use(notFoundHandler)

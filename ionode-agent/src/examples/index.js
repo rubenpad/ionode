@@ -3,8 +3,8 @@
 const IonodeAgent = require('../')
 
 const agent = new IonodeAgent({
-  name: 'example',
-  username: 'test',
+  name: 'node',
+  username: 'ionode',
   interval: 2000
 })
 
@@ -39,4 +39,4 @@ function eventHandler(payload) {
   console.log(payload)
 }
 
-setTimeout(() => agent.disconnect(), 20000)
+setTimeout(() => agent.disconnect(), 60000)
