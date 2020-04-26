@@ -7,15 +7,21 @@
 
   export let uuid;
   export let type;
+  export let socket;
+
   let canvas;
+  let chart;
+  let metrics = [];
   const data = [];
   const labels = [];
 
   onMount(async () => {
-    const response = await fetch(
-      `${config.serverHost}/metrics/${uuid}/${type}`
-    );
-    const metrics = await response.json();
+    try {
+      const metricsResponse = await fetch(
+        `${config.serverHost}/metrics/${uuid}/${type}`
+      );
+      metrics = await metricsResponse.json();
+    } catch (error) {}
 
     if (Array.isArray(metrics)) {
       metrics.forEach(metric => {
@@ -25,7 +31,7 @@
     }
 
     const ctx = canvas.getContext("2d");
-    const chart = new Chart(ctx, {
+    chart = new Chart(ctx, {
       type: "line",
       data: {
         labels,
@@ -39,6 +45,29 @@
         ]
       },
       options: {}
+    });
+
+    socket.on("agent/message", payload => {
+      if (payload.agent.uuid === uuid) {
+        const metricFound = payload.metrics.find(
+          metric => metric.type === type
+        );
+
+        const length = labels.length || data.length;
+
+        // Just show 20 metric values in the chart
+        // if length is > 20 remove the first element
+        // and push a new one last
+        if (length >= 20) {
+          labels.shift();
+          data.shift();
+        }
+
+        labels.push(moment(metricFound.createdAt).format("HH:mm:ss"));
+        data.push(metricFound.value);
+
+        chart.update();
+      }
     });
   });
 </script>

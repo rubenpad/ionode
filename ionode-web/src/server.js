@@ -7,10 +7,11 @@ import http from 'http'
 import proxy from './proxy'
 import IonodeAgent from 'ionode-agent'
 import pipe from './utils/pipe'
+import { config } from './config'
 
 const { PORT, NODE_ENV } = process.env
 const dev = NODE_ENV === 'development'
-const agent = new IonodeAgent()
+const agent = new IonodeAgent({ mqtt: { host: config.mqttHost } })
 const app = express()
 const server = http.createServer(app)
 const io = socket(server)

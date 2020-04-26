@@ -5,20 +5,33 @@
   import { config } from "../config/index.js";
   import Metric from "../components/Metric.svelte";
 
-  export let agent = {};
+  export let uuid;
+  export let socket;
+
+  let agent = {};
   let visible = true;
   let metrics = [];
   let error;
 
   onMount(async () => {
+    console.log(uuid)
     try {
-      const metricsResponse = await fetch(
-        `${config.serverHost}/metrics/${agent.uuid}`
-      );
+      const [agentResponse, metricsResponse] = await Promise.all([
+        fetch(`${config.serverHost}/agents/${uuid}`),
+        fetch(`${config.serverHost}/metrics/${uuid}`)
+      ]);
+
+      agent = await agentResponse.json();
       metrics = await metricsResponse.json();
     } catch (error) {
       error = error;
     }
+
+    socket.on("agent/disconnected", payload => {
+      if (payload.agent === uuid) {
+        agent.connected = false;
+      }
+    });
   });
 
   function toggleMetrics() {
@@ -93,7 +106,7 @@
       <div transition:fade>
         <h3 class="metrics-title">Metrics</h3>
         {#each metrics as metric}
-          <Metric uuid={agent.uuid} type={metric.type} />
+          <Metric {socket} {uuid} type={metric.type} />
         {:else}
           <p>Loading...</p>
         {/each}

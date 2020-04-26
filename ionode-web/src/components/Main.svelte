@@ -4,7 +4,7 @@
 
   import { config } from "../config/index";
   import Agent from "./Agent.svelte";
-
+  import Metric from "./Metric.svelte";
   const socket = io(config.serverHost);
   let agents = [];
 
@@ -15,23 +15,15 @@
     } catch (error) {
       console.log(error);
     }
+  });
 
-    socket.on("agent/message", payload => {
-      console.log("agent/message", payload);
-    });
-
-    socket.on("agent/connected", payload => {
-      console.log("agent/connected", payload);
-    });
-
-    socket.on("agent/disconnected", payload => {
-      console.log("agent/disconnected", payload);
-    });
+  socket.on("agent/connected", payload => {
+    const { uuid } = payload.agent;
+    const existing = agents.find(agent => agent.uuid === uuid);
+    if (!existing) {
+      agents.push(payload.agent);
+    }
   });
 </script>
 
-{#each agents as agent}
-  <Agent {agent} />
-{:else}
-  <p>Loading...</p>
-{/each}
+<Metric uuid="f4d9697a-839d-4394-9cc7-89b6911409f9" type="rss" {socket} />
