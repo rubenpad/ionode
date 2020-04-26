@@ -14,18 +14,15 @@
   let error;
 
   onMount(async () => {
-    console.log(uuid)
     try {
-      const [agentResponse, metricsResponse] = await Promise.all([
-        fetch(`${config.serverHost}/agents/${uuid}`),
-        fetch(`${config.serverHost}/metrics/${uuid}`)
-      ]);
+      const agentResponse = await fetch(`${config.serverHost}/agents/${uuid}`);
 
       agent = await agentResponse.json();
-      metrics = await metricsResponse.json();
     } catch (error) {
       error = error;
     }
+
+    loadMetrics();
 
     socket.on("agent/disconnected", payload => {
       if (payload.agent === uuid) {
@@ -33,6 +30,17 @@
       }
     });
   });
+
+  async function loadMetrics() {
+    try {
+      const metricsResponse = await fetch(
+        `${config.serverHost}/metrics/${uuid}`
+      );
+      metrics = await metricsResponse.json();
+    } catch (error) {
+      error = error;
+    }
+  }
 
   function toggleMetrics() {
     visible = visible ? false : true;
@@ -106,7 +114,7 @@
       <div transition:fade>
         <h3 class="metrics-title">Metrics</h3>
         {#each metrics as metric}
-          <Metric {socket} {uuid} type={metric.type} />
+          <Metric {uuid} type={metric.type} {socket} />
         {:else}
           <p>Loading...</p>
         {/each}
