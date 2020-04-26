@@ -2,11 +2,11 @@
   "name": "ionode-api",
   "version": "1.0.0",
   "private": true,
-  "description": "IoT Platform - API module",
+  "description": "IoT Platform - IoNode API ",
   "main": "src/index.js",
   "scripts": {
     "dev": "DEBUG=ionode:* nodemon src/index.js",
-    "start": "node src/index.js",
+    "start": "NODE_ENV=production node src/index",
     "test": "jest"
   },
   "repository": {
@@ -22,16 +22,16 @@
   "dependencies": {
     "@hapi/boom": "9.1.0",
     "chalk": "4.0.0",
-    "cors": "^2.8.5",
+    "cors": "2.8.5",
     "debug": "4.1.1",
     "express": "4.17.1",
-    "express-jwt": "^5.3.3",
+    "express-jwt": "5.3.3",
     "ionode-db": "file:../ionode-db",
     "ionode-tools": "file:../ionode-tools",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "8.5.1"
   },
   "devDependencies": {
-    "husky": "^4.2.5",
+    "husky": "4.2.5",
     "jest": "25.4.0",
     "supertest": "4.0.2"
   }

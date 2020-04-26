@@ -12,22 +12,22 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
-    "chart.js": "^2.9.3",
-    "compression": "^1.7.1",
-    "express": "^4.17.1",
+    "chart.js": "2.9.3",
+    "compression": "1.7.1",
+    "express": "4.17.1",
     "ionode-agent": "file:../ionode-agent",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.6.0",
+    "moment": "2.24.0",
+    "node-fetch": "2.6.0",
     "polka": "next",
-    "sirv": "^0.4.0",
-    "socket.io": "^2.3.0",
-    "socket.io-client": "^2.3.0"
+    "sirv": "0.4.0",
+    "socket.io": "2.3.0",
+    "socket.io-client": "2.3.0"
   },
   "devDependencies": {
-    "npm-run-all": "^4.1.5",
-    "sapper": "^0.27.0",
-    "svelte": "^3.0.0",
-    "svelte-loader": "^2.9.0",
-    "webpack": "^4.7.0"
+    "npm-run-all": "4.1.5",
+    "sapper": "0.27.0",
+    "svelte": "3.0.0",
+    "svelte-loader": "2.9.0",
+    "webpack": "4.7.0"
   }
 }

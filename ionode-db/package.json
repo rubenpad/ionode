@@ -2,13 +2,12 @@
   "name": "ionode-db",
   "version": "1.0.0",
   "private": true,
-  "description": "A mini IoT node platform",
+  "description": "IoT Platform - IoNode DB",
   "main": "src/index.js",
   "scripts": {
     "setup": "DEBUG=app:* node src/setup.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "start": "NODE_ENV=production node src/index",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -21,20 +20,20 @@
   },
   "homepage": "https://github.com/rubbenpad/ionode#readme",
   "devDependencies": {
-    "husky": "^4.2.5",
-    "jest": "^25.3.0",
-    "sqlite3": "^4.1.1"
+    "husky": "4.2.5",
+    "jest": "25.3.0",
+    "sqlite3": "4.1.1"
   },
   "dependencies": {
-    "chalk": "^4.0.0",
-    "debug": "^4.1.1",
-    "defaults": "^1.0.3",
-    "dotenv": "^8.2.0",
-    "inquirer": "^7.1.0",
+    "chalk": "4.0.0",
+    "debug": "4.1.1",
+    "defaults": "1.0.3",
+    "dotenv": "8.2.0",
+    "inquirer": "7.1.0",
     "ionode-tools": "file:../ionode-tools",
-    "pg": "^8.0.2",
-    "pg-hstore": "^2.3.3",
-    "sequelize": "^5.21.6"
+    "pg": "8.0.2",
+    "pg-hstore": "2.3.3",
+    "sequelize": "5.21.6"
   },
   "jest": {
     "verbose": true

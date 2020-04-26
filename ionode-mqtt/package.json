@@ -2,10 +2,11 @@
   "name": "ionode-mqtt",
   "version": "1.0.0",
   "private": true,
-  "description": "IoT Platform - ionode-mqtt",
+  "description": "IoT Platform - IoNode MQTT",
   "main": "src/server.js",
   "scripts": {
-    "dev": "DEBUG=ionode:* nodemon src/server.js"
+    "dev": "DEBUG=ionode:* nodemon src/server.js",
+    "start": "NODE_ENV=production node src/server"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,5 @@
     "dotenv": "8.2.0",
     "ionode-db": "file:../ionode-db",
     "ionode-tools": "file:../ionode-tools"
-  },
-  "devDependencies": {}
+  }
 }

@@ -2,10 +2,10 @@
   "name": "ionode-agent",
   "version": "1.0.0",
   "private": true,
-  "description": "IoT Node Platform - IoNode",
+  "description": "IoT Platform - IoNode Agent",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "node src/examples/index"
   },
   "repository": {
     "type": "git",
