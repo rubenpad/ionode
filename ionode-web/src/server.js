@@ -6,6 +6,7 @@ import socket from 'socket.io'
 import http from 'http'
 import proxy from './proxy'
 import IonodeAgent from 'ionode-agent'
+import pipe from './utils/pipe'
 
 const { PORT, NODE_ENV } = process.env
 const dev = NODE_ENV === 'development'
@@ -28,7 +29,7 @@ server.listen(PORT, (err) => {
 })
 
 io.on('connect', (socket) => {
-  debug(`[connected]: ${socket.id}`)
+  console.log(`[connected]: ${socket.id}`)
 
   // This function makes a pipe to pass the args received in agent emit event
   // to socket emit event and so distribute them
