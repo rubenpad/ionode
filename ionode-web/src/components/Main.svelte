@@ -18,12 +18,16 @@
 
     socket.on("agent/connected", payload => {
       const { uuid } = payload.agent;
-      const existing = agents.find(agent => agent.uuid === uuid);
+      const existing = agents.some(agent => agent.uuid === uuid);
       if (!existing) {
-        agents.push(payload.agent);
+        agents = [...agents, payload.agent];
       }
     });
   });
 </script>
 
-<Agent uuid="619e99ac-5bda-48b6-8dd4-69ace0ff183f" {socket} />
+{#each agents as agent}
+  <Agent uuid={agent.uuid} {socket} />
+{:else}
+  <p>Loading...</p>
+{/each}

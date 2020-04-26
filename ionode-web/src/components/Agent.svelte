@@ -1,32 +1,36 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount, afterUpdate } from "svelte";
   import { fade } from "svelte/transition";
 
   import { config } from "../config/index.js";
   import Metric from "../components/Metric.svelte";
 
-  export let uuid;
   export let socket;
+  export let uuid;
 
-  let agent = {};
+  let name = "";
+  let pid = 0;
+  let hostname = "";
+  let connected = false;
   let visible = true;
   let metrics = [];
   let error;
 
   onMount(async () => {
-    try {
-      const agentResponse = await fetch(`${config.serverHost}/agents/${uuid}`);
+    const agentResponse = await fetch(`${config.serverHost}/agents/${uuid}`);
 
-      agent = await agentResponse.json();
-    } catch (error) {
-      error = error;
-    }
+    const agent = await agentResponse.json();
+
+    name = agent.name;
+    pid = agent.pid;
+    hostname = agent.hostname;
+    connected = agent.connected;
 
     loadMetrics();
 
     socket.on("agent/disconnected", payload => {
-      if (payload.agent === uuid) {
-        agent.connected = false;
+      if (payload.agent.uuid === uuid) {
+        connected = false;
       }
     });
   });
@@ -103,11 +107,11 @@
 
 <div class="agent">
   <div>
-    <h2 class="agent-title">{agent.name} - {agent.pid}</h2>
-    <p class="agent-host">{agent.hostname}</p>
+    <h2 class="agent-title">{name} - {pid}</h2>
+    <p class="agent-host">{hostname}</p>
     <p class="agent-status">
       Connected:
-      <span>{agent.connected}</span>
+      <span>{connected}</span>
     </p>
     <button on:click={toggleMetrics} class="button">Toggle Metrics</button>
     {#if visible}
