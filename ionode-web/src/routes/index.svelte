@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-  <title>Sapper project template</title>
+  <title>IoNode Platform</title>
 </svelte:head>
 
 <Main />
