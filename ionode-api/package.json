@@ -24,7 +24,7 @@
     "chalk": "4.0.0",
     "cors": "2.8.5",
     "debug": "4.1.1",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "express-jwt": "6.0.0",
     "ionode-db": "file:../ionode-db",
     "ionode-tools": "file:../ionode-tools",
